@@ -1,131 +1,110 @@
-in my below code i have create workitem which have some properties please update those properties accordingly ,
-for example -
-const workitems = [
-   {
-     id: 1,
-     name : "workItem 1",
-     health: 80
-   },
- {
-     id: 2,
-     name : "workItem 2",
-     health: 10
-   },
-{
-     id: 3,
-     name : "workItem 3",
-     health: 50
-   },
-].
+in my below code when i click on handleinfo button then for every li info get display but i want only perticular that li this function should be called and display only info div regaridng this li , please update my code, 
+and also add smooth transition on info div when it appear and close. 
 
-then when i click on button then perticular workitem information should be show in popup component card and for "bar" set the value of workitem health. 
-please update my code. 
-add some animation for popup component when it appear and close , add ease in out with 0.5 sec and more take your idea for animation.
-
+below is my code - 
 import React, { useState } from 'react';
-import Popup from './components/Popup';
-import "./App.css";
-const App = () => {
- const [showPopup, setShowPopup] = useState(false);
- const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
- const handleButtonClick = (event) => {
-   const { clientX, clientY } = event;
-   setPopupPosition({ x: clientX, y: clientY });
-   setShowPopup(true);
- };
- const handleClose = () => {
-   setShowPopup(false);
- };
- const workitems = [
-   {
-     id: 1,
-     value1: 80,
-     value2: 60,
-     value3: 90,
-   },
-   {
-     id: 2,
-     value1: 50,
-     value2: 40,
-     value3: 70,
-   },
-   {
-     id: 3,
-     value1: 30,
-     value2: 20,
-     value3: 50,
-   },
- ];
- return (
-  <div>
-  <div>
-      <h1 class="text-center" >Polarion Work Item</h1>
-  </div>
+import "./MyModal.css"
+const MyModal1 = () => {
+    const [show, setShow] = useState(false);
+    const [infoLi, setInfoLi] = useState(false);
 
-<div className="app">
-     {workitems.map((workitem) => (
-      <>
-        <div class="d-flex p-3 bg-secondary text-white justify-content-around">
-        <h5>WorkItem {workitem.id} </h5> 
-        <button className="btn btn-primary open-btn" onClick={handleButtonClick}> Open Popup</button>
-      </div>
-      </>
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-     ))}
-     {showPopup && (
-<Popup
-         onClose={handleClose}
-         workitem={workitems.find((workitem) => workitem.id === 1)} // Modify to pass the desired workitem based on the clicked button
-       />
-     )}
-</div>
-</div>
- );
-};
-export default App;
-
-import React from 'react';
-import "./popup.css";
-import closeIcon from '../images/cancel.png';
-const Popup = ({ onClose, workitem }) => {
-
-    const { value1, value2, value3 } = workitem;
-    const getColorBarStyle = (value) => {
-        const percentage = Math.floor((value / 100) * 100); // Adjust the percentage calculation based on the actual range of values
-        return {
-            width: `${percentage}%`,
-            backgroundColor: value > 70 ? 'green' : value > 40 ? 'orange' : 'red',
-        };
+    const handleInfo = () => {
+        setInfoLi(!infoLi);
+      };
+    const modalStyle = {
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 9999,
+        // Add any additional styles as needed
     };
+
     return (
-        <div className="popup show">
-            <div class="card">
-                <div class="card-header d-flex justify-content-around">
-                    <h5>workItem {workitem.id}</h5>
-                    <button className='btn btn-primary'  onClick={onClose}><i class="fa fa-close"></i></button>
-                    
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Work Item Health</h5>
+        <div className='workitemBox'>
+            <button className="btn btn-primary" onClick={handleShow}>
+                Open Modal
+            </button>
 
+            {show && (
+                <div className="modal-container w-50" style={modalStyle}>
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Logo </h5>
+                            <button type="button" className="close" onClick={handleClose}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body container-fluid" >
+                            <div class="overflow-auto " style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                                <ul class="list-group overflow-auto">
 
-                  {/*   <div className="color-bar">
-                        <div className="bar" style={getColorBarStyle(value1)}>sf</div>
-                        <div className="bar" style={getColorBarStyle(value2)}>vdfs</div>
-                        <div className="bar" style={getColorBarStyle(value3)}>fdv</div>
-                    </div> */}
+                                    <div>
+                                        <div class="list-group-item dropdown  d-flex justify-content-between decoration-none">
+                                            <li >An item  </li>
+                                            <button class="btn " onClick={handleInfo} >
+                                                <i class="fa fa-plus-square"></i>
+                                            </button>
+                                        </div>
 
+                                       {
+                                        infoLi && (
+                                            <>
+                                            <div className='info list-group-item' id='info'>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                                        </div>
+                                            </>
+                                        )
+                                       }
+                                    </div>
 
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style={{ width: "25%", aria_valuenow: "25", ariaValuemin: "0", ariaValuemax: "100" }}></div>
+                                    <div>
+                                        <div class="list-group-item dropdown  d-flex justify-content-between decoration-none">
+                                            <li >An item  </li>
+                                            <button class="btn " onClick={handleInfo} >
+                                                <i class="fa fa-plus-square"></i>
+                                            </button>
+                                        </div>
+
+                                       {
+                                        infoLi && (
+                                            <>
+                                            <div className='info list-group-item' id='info'>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                                        </div>
+                                            </>
+                                        )
+                                       }
+                                    </div>
+
+                                </ul>
+                            </div>
+                            <div >
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" >
+                                Validate Title
+                            </button>
+                            <button type="button" className="btn btn-primary" >
+                                Update
+                            </button>
+
+                        </div>
+
                     </div>
-                    <br />
-                    <button className="btn btn-primary close-btn" >Update</button>
+                    <div>
+                        <h6> Powered by HCLTech IntelliServices</h6>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
-export default Popup;
-
-
+export default MyModal1;
